@@ -1,0 +1,78 @@
+1)Write a query to find the name of the sailors who reserved red boat
+
+query
+------
+select s.sname from sailors_2605 s where s.sid in
+(select r.sid from reserves_2605 r where  r.bid in
+(select b.bid from boats_2605 b where color='red'));
+
+
+2.Write a query to find the names of sailors who have reserved a red and a
+green boat.
+query
+-----
+select s.sname from sailors_2605 s where s.sid in
+(select r.sid from reserves_2605 r where  r.bid in
+(select b.bid from boats_2605 b where color in ('red','green')));
+
+3. Write a query to find the name of sailor who reserved 1 boat
+query
+------
+select s.sname from sailors_2605 s,reserves_2605 r where s.sid=r.sid group BY r.sid,s.sname;
+
+4.4) Write a query to find the sids of all sailors who have reserved red boats
+but not green boats
+
+query
+------
+SELECT S.sid from Sailors_2605 S, Reserves_2605 R, Boats_2605 B
+where s.sid=r.sid and r.bid=b.bid and b.color='red'
+minus
+SELECT S.sid from Sailors_2605 S, Reserves_2605 R, Boats_2605 B
+where s.sid=r.sid and r.bid=b.bid and b.color='green';
+
+5.Write a query to find the sailors with the highest rating
+query
+------
+select sname from sailors_2605 where rating in (select max(rating) from sailors_2605);
+
+6.Write a query to find  the number of sailors elligible to vote
+
+query
+-------
+select count(*) from sailors_2605 where age>=18;
+
+7.Write a query to count different sailors name
+query
+------
+select DISTINCT sname,length(sname) from sailors_2605;
+
+8.Write a query to find  the oldest sailor
+
+query
+------
+select sname from sailors_2605 where age in(select max(age) from sailors_2605);
+
+9)Write a query to find name as SAILERNAME,Rating,Age,bname as BOATNAME,Color,Day.
+query
+------
+SELECT S.sname,s.rating,s.age,b.bname as BOATNAME,b.color,r.day
+from Sailors_2605 S, Reserves_2605 R, Boats_2605 B
+where s.sid=r.sid and r.bid=b.bid;
+
+10.Write a query to display the sailor name  starts with letter a and b. 
+query
+------
+select sname from sailors_2605 where sname like 'a%' or sname like 'b%';
+
+11.Find the names of the Sailors who have reserved at least one boat.
+
+QUERY
+------
+SELECT S.SNAME FROM sailors_2605 S,reserves_2605 R WHERE s.sid=r.sid GROUP BY s.sname;
+
+13.
+
+query
+------
+SELECT AGE FROM sailors_2605 WHERE sname like '%b__' and length(sname)>3;
